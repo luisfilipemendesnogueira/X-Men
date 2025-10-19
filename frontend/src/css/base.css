@@ -1,0 +1,256 @@
+/* === IMPORTAÇÕES DE FONTES === */
+
+
+/* === VARIÁVEIS GLOBAIS (ROOT) === */
+:root {
+  /* Cores */
+  --cor-fundo: #161719;
+  --cor-fundo-cards: #0E0F10;
+  --cor-primaria-clara: #ffd000;
+  --gradiente-primario: linear-gradient(90deg, #cbad00 0%, #ecd13b 100%);
+  --cor-texto-claro: #f0f0f0;
+  --cor-texto-escuro: #817E7C;
+  --cor-texto-suave: #BEB8A1;
+  --cor-borda: #8B8C89;
+
+  /* Fontes */
+  --fonte-familia: "Inter", Helvetica, sans-serif;
+  --fonte-t1: 48px;
+  --fonte-t2: 36px;
+  --fonte-t3: 20px;
+  --fonte-corpo: 18px;
+  --fonte-detalhe: 14px;
+
+  --peso-regular: 400;
+  --peso-medio: 500;
+  --peso-semibold: 600;
+  --peso-bold: 700;
+
+  /* Efeitos */
+  --carousel-gap: 3rem;
+  --sombra-cartao: 0 4px 10px rgba(0, 0, 0, 0.25);
+  --sombra-texto: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* === CLASSES DE UTILIDADE === */
+.container {
+  width: 100%;
+  padding-bottom: 2rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
+
+.titulo-secao {
+  font-size: var(--fonte-t2);
+  font-weight: var(--peso-bold);
+  color: var(--cor-primaria-clara);
+  text-align: center;
+  padding-top: 0rem;
+  margin-bottom: 2rem;
+}
+
+.carousel-line {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 2rem;
+  margin-bottom: 0rem;
+}
+
+.carousel-line::after{
+  content: "";
+  display: block;
+  height: 4px;
+  width: 100%;
+  margin: 0px auto 0;
+  background: linear-gradient(to right, #ffe766 0%, #ffb300 100%);
+  border-radius: 2px;
+}
+
+#artigo .carousel-indicator {
+  display: none;
+}
+
+#locais .titulo-secao {
+  padding-top: 3rem;
+}
+
+#artigo .carousel-line {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 0rem;
+  margin-bottom: 0rem;
+}
+
+.rolagem-horizontal {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.rolagem-horizontal::-webkit-scrollbar {
+  display: none;
+}
+
+.rolagem-horizontal.ativo {
+  cursor: grabbing;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.rolagem-horizontal img {
+  pointer-events: none;
+}
+
+
+/* === COMPONENTES BASE === */
+
+/* --- Botão --- */
+.botao {
+  display: inline-block;
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-size: var(--fonte-corpo);
+  font-weight: var(--peso-semibold);
+  color: var(--cor-texto-claro);
+  text-align: center;
+  background: var(--gradiente-primario);
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--sombra-cartao);
+  transition: transform 0.2s ease;
+}
+
+.botao:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Cartão (Base) --- */
+.cartao {
+  background-color: var(--cor-fundo-cards);
+  border-radius: 8px;
+  box-shadow: var(--sombra-cartao);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------- Carrossel --------------- */
+
+.carousel-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  gap: 1rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.carousel-container {
+  flex: 1;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.carousel-prev,
+.carousel-next {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradiente-primario);
+  border-radius: 50%;
+  padding: 0px;
+  cursor: pointer;
+  box-shadow: var(--sombra-cartao);
+  flex-shrink: 0;
+}
+
+.carousel-prev img,
+.carousel-next img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+}
+
+.carousel-prev img {
+  transform: translateX(-2px);
+}
+.carousel-next img {
+  transform: translateX(2px);
+}
+
+.carousel-slide {
+  display: flex;
+  height: 100%;
+  gap: var(--carousel-gap, 20px);
+  padding: 0;
+  transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  will-change: transform;
+}
+
+.carousel-item {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: auto;
+  cursor: pointer;
+}
+
+#artigo .carousel-item{
+  cursor: default;
+}
+
+/* Indicadores */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+}
+
+.carousel-indicator {
+  width: 80px;
+  height: 4px;
+  background-color: #d9d9d9;
+  border-radius: 4px;
+  box-shadow: var(--sombra-cartao);
+  transition: transform 0.3s ease;
+}
+
+.carousel-indicator-active {
+  background-color: var(--cor-primaria-clara);
+  transform: scale(1.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Configuração responsiva: 1 item por tela */
+.carousel-wrapper[data-items-per-view="1"] .carousel-item {
+  flex-basis: 100%;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* --- Loader Catálogo --- */
+.loader-catalogo, .loader-home {
+  background-image: url('../assets/images/fundoLoader.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

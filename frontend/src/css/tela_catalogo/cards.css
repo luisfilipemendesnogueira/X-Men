@@ -1,0 +1,250 @@
+/* Header fixo da pesquisa */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    padding: 1rem;
+    z-index: 1000;
+    background-color: #161719;
+    border-radius: 8px;
+}
+
+.header input {
+    width: 90%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: rgba(33, 33, 33, 0.948);
+    color: #fff;
+    box-sizing: border-box;
+    height: 40px;
+}
+
+/* Botão de Voltar */
+.botao-header, .botao-catalogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10%;
+    height: 40px;
+    padding: 0 25px;
+    border-radius: 8px;
+    font-size: clamp(12px, 2vw, 20px);
+    font-weight: var(--peso-semibold);
+    color: var(--cor-texto-claro);
+    background: var(--gradiente-primario);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--sombra-cartao);
+    transition: transform 0.2s ease;
+    text-align: center;
+}
+
+.botao-registro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 12px 20px;
+    white-space: nowrap;
+    gap: 20px;
+    
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+
+    
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    padding: 8px;
+    z-index: 1000;
+    background-color: #161719ef;
+    border-radius: 8px;
+
+
+}
+
+.registro {
+    width: 60%;
+    max-width: 300px;
+    min-width: 150px;
+    text-align: center;
+}
+
+/* ----------------------- Seção de Catálogo ------------------------ */
+/* Página de Catálogo (fundo branco e texto escuro) */
+
+.secao-cards {
+    background-color: var(--cor-fundo);
+}
+
+/* --- Cartão do Catálogo --- */
+.cartao-card {
+    width: 100%;
+    height: 450px;
+    border: none;
+    box-sizing: content-box;
+    border-radius: 12px;
+    box-shadow: var(--sombra-cartao);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cartao-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.cartao-card__imagem {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    user-select: none;
+}
+
+.cartao-card__conteudo {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex-grow: 1;
+    font-size: clamp(11px, 2vw, 16px);
+    user-select: none;
+}
+
+.cartao-card__titulo {
+    font-size: var(--fonte-t3);
+    font-weight: var(--peso-semibold);
+    color: var(--cor-texto-escuro);
+    align-self: flex-start;
+    font-size: clamp(11px, 2vw, 18px);
+    user-select: none;
+}
+
+.cartao-card__titulo::after {
+    content: "";
+    display: block;
+    border-bottom: 2px solid #ffd000;
+}
+
+.cartao-card__localizacao {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--fonte-detalhe);
+    color: var(--cor-texto-suave);
+    height: 45px;
+}
+
+.cards_linha {
+    display: flex;
+    gap: 25px;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.paginacao {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.paginacao__indicador {
+    width: 80px;
+    height: 8px;
+    background-color: #d9d9d9;
+    border-radius: 4px;
+}
+
+.paginacao__indicador--ativo {
+    background-color: var(--cor-primaria-clara);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+}
+
+/* Campos de texto e arquivo */
+.modal-content input[type="text"], select{
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: all 0.2s;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: rgba(33, 33, 33, 0.948);
+    color: #fff;
+    height: 40px;
+    width: 90%;
+}
+
+select {
+    padding: 10px 11px;
+}
+
+.enviar-imagem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.cancelar{
+    width: 10%;
+    max-width: 300px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.subtitulo{
+    text-align: start;
+    font-size: 15px;
+    padding-top: 0rem;
+    margin-bottom: 0rem;
+    padding: 8px 0px;
+}
+
+.modal-content {
+    background: #161719;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-content input, 
+.modal-content button {
+    width: 100%;
+    padding: 8px;
+}

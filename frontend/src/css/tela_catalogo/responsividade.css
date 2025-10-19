@@ -1,0 +1,83 @@
+/* ===========================
+   Variáveis CSS
+=========================== */
+:root {
+  --cards-gap: 1px;
+}
+
+/* ===========================
+   Container da grade
+=========================== */
+.cards-wrapper {
+  width: 100%;
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+
+.cards-slide {
+  display: grid;
+  gap: var(--cards-gap, 10px);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* ===========================
+   Cards individuais
+=========================== */
+.cards-item {
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+}
+
+/* ===========================
+   Media Queries
+=========================== */
+
+/* Para telas grandes (3 cards fixos) */
+@media (min-width: 1081px) {
+  .cards-slide {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Para telas médias (2 cards) */
+@media (min-width: 801px) and (max-width: 1080px) {
+  .cards-slide {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Para telas pequenas (1 card) */
+@media (max-width: 800px) {
+  .cards-slide {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .botao-modal{
+    flex-direction: column;
+  }
+
+  .modal-content {
+    width: 90%;
+  }
+}
+
+/* Para telas muito pequenas (1 card) */
+@media (max-width: 366px) {
+  .cards-slide {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .enviar-imagem{
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .modal-content input[type="file"]{
+    padding: 8px 0px;
+  }
+}
