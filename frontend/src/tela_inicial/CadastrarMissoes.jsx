@@ -3,33 +3,55 @@ import axios from 'axios';
 import ImagemFormulario from '../assets/images/imagem_formulario.png';
 import StarRating from '../funcionalidades/StarRating';
 
-
 function CadastroMissao() {
     const [herois, setHerois] = useState([]);
     const [viloes, setViloes] = useState([]);
     const [locais, setLocais] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [dificuldade, setDificuldade] = useState(1);
-
     const [selectedHerois, setSelectedHerois] = useState(["", "", "", "", ""]);
-    const [numHerois, setNumHerois] = useState(1); // quantidade de selects visíveis
+    const [numHerois, setNumHerois] = useState(1);
     const [selectedVilao, setSelectedVilao] = useState('');
     const [selectedLocal, setSelectedLocal] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-
-
     useEffect(() => {
-        axios.get('http://localhost:8080/api/mutantes')
-            .then(res => setHerois(res.data.filter(m => m.tipo === 'heroi')))
-            .catch(err => console.error(err));
+        let isMounted = true;
+        let intervalId;
 
-        axios.get('http://localhost:8080/api/viloes')
-            .then(res => setViloes(res.data))
-            .catch(err => console.error(err));
+        const fetchData = async () => {
+            try {
+                const [resMutantes, resViloes, resLocais] = await Promise.allSettled([
+                    axios.get('http://localhost:8080/api/mutantes'),
+                    axios.get('http://localhost:8080/api/viloes'),
+                    axios.get('http://localhost:8080/api/locais')
+                ]);
 
-        axios.get('http://localhost:8080/api/locais')
-            .then(res => setLocais(res.data))
-            .catch(err => console.error(err));
+                if (!isMounted) return;
+
+                const mutantes = resMutantes.status === 'fulfilled' ? resMutantes.value.data : [];
+                const vils = resViloes.status === 'fulfilled' ? resViloes.value.data : [];
+                const locs = resLocais.status === 'fulfilled' ? resLocais.value.data : [];
+
+                if (mutantes.length > 0 && vils.length > 0 && locs.length > 0) {
+                    setHerois(mutantes.filter(m => m.tipo === 'heroi'));
+                    setViloes(vils);
+                    setLocais(locs);
+                    setLoading(false);
+                    clearInterval(intervalId);
+                }
+            } catch (err) {
+                console.log("Backend ainda não respondeu, tentando novamente...");
+            }
+        };
+
+        fetchData();
+        intervalId = setInterval(fetchData, 2000);
+
+        return () => {
+            isMounted = false;
+            clearInterval(intervalId);
+        };
     }, []);
 
     const handleHeroiChange = (index, value) => {
@@ -41,15 +63,12 @@ function CadastroMissao() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Pelo menos o primeiro herói precisa estar selecionado
         if (!selectedVilao || !selectedLocal || !selectedHerois[0]) {
             alert('Selecione vilão, local e pelo menos 1 herói.');
             return;
         }
 
-        // Remove heróis vazios antes de enviar
         const heroIds = selectedHerois.slice(0, numHerois).filter(h => h);
-
         setIsSubmitting(true);
 
         axios.post('http://localhost:8080/api/missoes', {
@@ -63,7 +82,7 @@ function CadastroMissao() {
                 setSelectedHerois(["", "", "", "", ""]);
                 setSelectedVilao('');
                 setSelectedLocal('');
-                setNumHerois(1); // reset para 1 select
+                setNumHerois(1);
             })
             .catch(err => {
                 console.error(err);
@@ -72,24 +91,23 @@ function CadastroMissao() {
             .finally(() => setIsSubmitting(false));
     };
 
+    if (loading) {
+        return <p className="loader-banco">Carregando banco de dados...</p>;
+    }
+
     return (
         <section id="cadastro-missao" className="container secao-cadastro-missao">
             <div className="cartao cartao-cadastro-missao">
                 <div className="cartao-cadastro-missao__banner">
-                    <img src={ImagemFormulario} alt="Imagem de um ambiente de sala de estar moderno" />
+                    <img src={ImagemFormulario} alt="Imagem do formulário" />
                 </div>
                 <div className="cartao-cadastro-missao__conteudo">
                     <div className="cartao-cadastro-missao__texto">
                         <div className="cartao-descricao">
                             <h3>Cadastre uma nova Missão:</h3>
                             <div className="cartao-texto">
-                                {`O alerta foi acionado! Prepare a operação e mobilize sua equipe.Selecione o local sob ataque, identifique o vilão responsável e convoque até cinco heróis para formar sua força-tarefa.
-                                Cada missão pode mudar o destino entre humanos e mutantes.Planeje sua estratégia, ajuste o nível de dificuldade e garanta que a equipe esteja pronta para enfrentar o desafio.Suas decisões moldam a reputação dos X-Men e definem quem ocupará o topo entre os 3 heróis mais ativos do Instituto Xavier.`.split("\n").map((linha, index) => (
-                                    <span key={index}>
-                                        {linha}
-                                        <br />
-                                    </span>
-                                ))}
+                                O alerta foi acionado! Prepare a operação e mobilize sua equipe.
+                                Selecione o local sob ataque, identifique o vilão responsável e convoque até cinco heróis.
                             </div>
                         </div>
                         <div className='herois-botoes-texto'>
@@ -104,9 +122,7 @@ function CadastroMissao() {
                                         className={`botao selecionar-herois ${numHerois === n ? 'ativo' : ''}`}
                                         onClick={() => {
                                             setNumHerois(n);
-                                            // Limpa as seleções dos selects visíveis
-                                            const newHerois = ["", "", "", "", ""];
-                                            setSelectedHerois(newHerois);
+                                            setSelectedHerois(["", "", "", "", ""]);
                                         }}
                                     >
                                         {n}
@@ -114,8 +130,8 @@ function CadastroMissao() {
                                 ))}
                             </div>
                         </div>
-
                     </div>
+
                     <div className="cartao-cadastro-missao__formulario">
                         <form onSubmit={handleSubmit}>
                             <div className="grupo-formulario">
@@ -126,11 +142,9 @@ function CadastroMissao() {
                                             key={index}
                                             value={h}
                                             onChange={e => handleHeroiChange(index, e.target.value)}
-                                            required={index < numHerois} // todos os selects visíveis são obrigatórios
+                                            required
                                         >
-                                            <option value="">
-                                                {"Selecione um herói"}
-                                            </option>
+                                            <option value="">Selecione um herói</option>
                                             {herois.map(hero => (
                                                 <option key={hero.idMutante} value={hero.idMutante}>{hero.alterEgo}</option>
                                             ))}
@@ -170,7 +184,6 @@ function CadastroMissao() {
                                     interactive
                                 />
                             </div>
-
 
                             <button type="submit" className="botao botao-cadastro-missao" disabled={isSubmitting}>
                                 {isSubmitting ? 'Enviando...' : 'Cadastrar Missão'}

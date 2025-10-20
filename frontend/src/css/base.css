@@ -254,3 +254,10 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.loader-banco {
+  font-size: 16px;
+  font-weight: var(--peso-bold);
+  color: rgba(190, 0, 0, 0.737);
+  text-align: center;
+}
