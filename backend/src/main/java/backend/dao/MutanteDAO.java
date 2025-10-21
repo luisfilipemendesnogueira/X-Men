@@ -40,7 +40,7 @@ public class MutanteDAO {
     }
 
     public void insertMutante(String alterEgo, String nome, String sobrenome, String imagem, String tipo) {
-        String sql = "INSERT INTO mutantes (alter_ego, nome, sobrenome, link, imagem) VALUES (?, ?, ?, '', ?, ?)";
+        String sql = "INSERT INTO mutantes (alter_ego, nome, sobrenome, link, imagem, tipo) VALUES (?, ?, ?, '', ?, ?)";
 
         try (Connection conn = MySQLConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
