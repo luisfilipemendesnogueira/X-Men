@@ -61,7 +61,6 @@ public class MutanteDAO {
                     psVilao.executeUpdate();
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

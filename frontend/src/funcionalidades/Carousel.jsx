@@ -155,10 +155,17 @@ export default function Carousel({ items, renderItem, itemsPerView: defaultItems
 
     const movedBy = currentTranslate - prevTranslate;
     const threshold = 10;
+    const lastPageStart = Math.max(0, items.length - itemsPerView);
 
-    if (movedBy < -threshold) moveToIndex(currentIndex + itemsPerView);
-    else if (movedBy > threshold) moveToIndex(currentIndex - itemsPerView);
-    else moveToIndex(currentIndex);
+    if (movedBy < -threshold) {
+      if (currentIndex >= lastPageStart) moveToIndex(0);
+      else moveToIndex(currentIndex + itemsPerView);
+    } else if (movedBy > threshold) {
+      if (currentIndex <= 0) moveToIndex(lastPageStart);
+      else moveToIndex(currentIndex - itemsPerView);
+    } else {
+      moveToIndex(currentIndex);
+    }
   };
 
   const handleClickItem = (event) => {
