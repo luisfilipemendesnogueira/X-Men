@@ -37,21 +37,7 @@
    Media Queries
 =========================== */
 
-/* Para telas grandes (3 cards fixos) */
-@media (min-width: 1081px) {
-  .cards-slide {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* Para telas médias (2 cards) */
-@media (min-width: 801px) and (max-width: 1080px) {
-  .cards-slide {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Para telas pequenas (1 card) */
+/* Para telas pequenas */
 @media (max-width: 800px) {
   .cards-slide {
     grid-template-columns: repeat(2, 1fr);
@@ -66,8 +52,8 @@
   }
 }
 
-/* Para telas muito pequenas (1 card) */
-@media (max-width: 366px) {
+/* Para telas muito pequenas */
+@media (max-width: 401px) {
   .cards-slide {
     grid-template-columns: repeat(1, 1fr);
   }

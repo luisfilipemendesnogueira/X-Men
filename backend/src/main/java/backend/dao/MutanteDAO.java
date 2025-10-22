@@ -42,16 +42,25 @@ public class MutanteDAO {
     public void insertMutante(String alterEgo, String nome, String sobrenome, String imagem, String tipo) {
         String sql = "INSERT INTO mutantes (alter_ego, nome, sobrenome, link, imagem) VALUES (?, ?, ?, '', ?, ?)";
 
-        try (Connection conn = MySQLConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = MySQLConnection.getConnection(); 
+        PreparedStatement psMutante = conn.prepareStatement(sql)) {
+            psMutante.setString(1, alterEgo);
+            psMutante.setString(2, nome);
+            psMutante.setString(3, sobrenome);
+            psMutante.setString(4, imagem);
+            psMutante.setString(5, tipo);
+            psMutante.executeUpdate();
 
-            ps.setString(1, alterEgo);
-            ps.setString(2, nome);
-            ps.setString(3, sobrenome);
-            ps.setString(4, imagem);
-            ps.setString(5, tipo);
-
-            ps.executeUpdate();
+            if (tipo != null && tipo.equalsIgnoreCase("vilao")) {
+                String sqlVilao = "INSERT INTO viloes (alter_ego, nome, sobrenome, imagem) VALUES (?, ?, ?, ?)";
+                try (PreparedStatement psVilao = conn.prepareStatement(sqlVilao)) {
+                    psVilao.setString(1, alterEgo);
+                    psVilao.setString(2, nome);
+                    psVilao.setString(3, sobrenome);
+                    psVilao.setString(4, imagem);
+                    psVilao.executeUpdate();
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
