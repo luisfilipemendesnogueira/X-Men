@@ -30,7 +30,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - backend_uploads:/app/uploads
+      - ./backend/uploads:/app/uploads
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/xmen_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
       SPRING_DATASOURCE_USERNAME: xmen_user
@@ -53,4 +53,3 @@ services:
 
 volumes:
   db_data:
-  backend_uploads:
